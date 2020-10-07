@@ -1,0 +1,86 @@
+/**
+ * Programmed by: 
+ * Summative_ConnectFour.java
+ * Due Date: Thursday January 23 2020
+ * Date Handed In: Wednesday January 22 2020
+ * Description: COnnection game where 2 players add pieces one at a time using the arrow 
+ * buttons to get 4 in a row horizontally or vertically or diagonally
+ * For Instructions and Limitations refer to Summative: Connect 4 Tutorial document
+ * Some code was borrowed from Mr.Merrit from the tictactoe assignment
+ */
+import java.awt.*;
+import javax.swing.*;
+
+public class ConnectFour extends JFrame{
+    ConnectFourEvent connectfour = new ConnectFourEvent(this);  // run the TicTacEvent object in background
+    ConnectFourEvent event; 
+    int height = 6;//height of the board
+    int width = 7;//width of the board
+    JPanel board = new JPanel();//make the panel
+    JButton[ ] [ ] boxes = new JButton [6][7];//setp up 2d array      
+
+    JOptionPane win = new JOptionPane("Winner");//make the pop up when someone wins
+    ImageIcon back = new ImageIcon("back.jpg ");//set back as the image back
+    ImageIcon arrows = new ImageIcon("arrow.jpg ");//set the arrows to arrow image
+    JButton reset = new JButton ("Reset");//create button Exit
+    JButton close = new JButton ("Exit");//create button reset
+    JTextField blank1 = new JTextField();//create a blank textfield
+    JTextField turn = new JTextField();//create turn text field
+    
+    public ConnectFour(){
+        super ("Connect Four");//creates outer frame with title
+        setSize (1300,900);//outer frame size
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//sets the program to quit running when the window is closed
+        FlowLayout layout = new FlowLayout();//arranges components left to right centering horizontally gap between them
+        setLayout(layout);
+        int name = 0;//name te button will have
+        String newname;//newname is a String
+        GridLayout layout1 = new GridLayout(7,7,0,0);//how it is layed out
+        board.setLayout(layout1);
+        //for loops creates and adds the buttons
+        for (int x=0; x<=5; x++){
+            for (int y=0; y<=6; y++){
+                name = name + 1;//name goes up by 1
+                newname = Integer.toString(name);//make the Integer into a string
+                boxes[x][y] = new JButton(newname);//add teh button to the 2d array
+                boxes[x][y].setIcon(back);//make that button the image
+                board.add(boxes[x][y]);//add the button to the board
+            }
+        }
+        //for loops for the top to set them as arrow images
+        for (int x=0; x<=0; x++){
+            for (int y=0; y<=6; y++){
+                boxes[x][y].setIcon(arrows);
+            }
+        }
+        add (board);//make the board        
+        board.add(blank1);//add blank1 to board
+        board.add(reset);//add reset button to board
+        board.add(turn);//add the turn box to board
+        board.add(close);//adds the exit button
+        turn.setText("Red's Turn");
+        reset.addActionListener(connectfour);//allow clicks on the reset button
+        close.addActionListener(connectfour);//allow clicks on the exit button
+        for (int x=0; x<=5; x++){
+            for (int y=0; y<=6; y++){
+                boxes[x][y].addActionListener(connectfour);//allow clicks on all buttons
+            }
+        }
+        setVisible(true);//make them visible
+        
+        
+    }   
+    public ConnectFour (ConnectFourEvent in){
+        event=in;//connect event to the board
+        
+    }
+
+
+    public static void main(String[] args) {
+        // TODO code application logic here
+        ConnectFour frame = new ConnectFour();
+
+
+    }
+    
+}
